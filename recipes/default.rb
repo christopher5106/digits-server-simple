@@ -23,15 +23,13 @@ bash "install-digits" do
   apt-get -y install --no-install-recommends libboost-all-dev #missing
   make all --jobs=8
   cd ../digits/
-  export CUDA_HOME=/usr/local/cuda
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
   ln /dev/null /dev/raw1394
   pip install -r requirements.txt
-  export CAFE_HOME=/digits/digits-2.0/caffe
-  ldconfig
   mkdir /digits/data/mnist -p
   python tools/download_data/main.py mnist /digits/data/mnist
   apt-get install linux-image-extra-$(uname -r)
-  ./digits-server
+  echo '[DIGITS]' >> digits/digits.cfg
+  echo 'caffe_root = /digits/digits-2.0/caffe' >> digits/digits.cfg
+  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64 ./digits-server -D  
   EOH
 end
