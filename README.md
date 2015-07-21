@@ -11,3 +11,5 @@ Create a stack on AWS Opsworks with your repository.
 Create a custom layer and add the recipe 'digits-server-simple' to the layer's recipes in the setup step. Add also a EBS volume to the layer configuration under `/digits` mount point (since we cannot change root volume size in Opsworks).
 
 Launch an instance, for example a `g2.2xlarge`.
+
+Digits server will be accessible on port 8080. Open the TCP connection for port `8080` in the instance's security group.
