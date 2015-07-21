@@ -1,0 +1,30 @@
+bash "install-digits" do
+  user "root"
+  cwd "/home/ubuntu"
+  code <<-EOH
+  wget -O cuda.deb #{node.cuda[:url]}
+  dpkg -i cuda.deb
+  apt-get update
+  apt-get -y install cuda
+  wget -O cudnn.tgz #{node.cudnn[:url]}
+  tar xvzf cudnn.tgz
+  cd cudnn-6.5-linux-x64-v2/
+  cp cudnn.h /usr/local/cuda/include/
+  cp libcudnn* /usr/local/cuda/lib64/
+  apt-get -y install git
+  wget -O digits.tgz #{node.digits[:url]}
+  tar xvzf digits.tgz
+  cd digits-2.0/
+  ./install.sh
+  cd caffe
+  apt-get -y install --no-install-recommends libboost-all-dev #missing
+  make all --jobs=8
+  cd ../digits/
+  export CUDA_HOME=/usr/local/cuda
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
+  ln /dev/null /dev/raw1394
+  pip install -r requirements.txt
+  export CAFE_HOME=../caffe
+  ./digits-server
+  EOH
+end
