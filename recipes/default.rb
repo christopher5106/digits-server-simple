@@ -1,6 +1,6 @@
 bash "install-digits" do
   user "root"
-  cwd "/home/ubuntu"
+  cwd "/digits"
   code <<-EOH
   wget -O cuda.deb #{node.cuda[:url]}
   dpkg -i cuda.deb
@@ -12,6 +12,7 @@ bash "install-digits" do
   rm cudnn.tgz
   cp cudnn-6.5-linux-x64-v2/cudnn.h /usr/local/cuda/include/
   cp cudnn-6.5-linux-x64-v2/libcudnn* /usr/local/cuda/lib64/
+  rm -r cudnn-6.5-linux-x64-v2
   apt-get -y install git
   wget -O digits.tgz #{node.digits[:url]}
   tar xvzf digits.tgz
@@ -26,9 +27,11 @@ bash "install-digits" do
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
   ln /dev/null /dev/raw1394
   pip install -r requirements.txt
-  export CAFE_HOME=/home/ubuntu/digits-2.0/caffe
-  mkdir /home/ubuntu/data/mnist -p
-  python tools/download_data/main.py mnist /home/ubuntu/data/mnist
+  export CAFE_HOME=/digits/digits-2.0/caffe
+  export CAFE_ROOT=/digits/digits-2.0/caffe
+  export caffe_root=/digits/digits-2.0/caffe
+  mkdir /digits/data/mnist -p
+  python tools/download_data/main.py mnist /digits/data/mnist
   apt-get install linux-image-extra-$(uname -r)
   ./digits-server
   EOH
