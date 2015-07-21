@@ -28,8 +28,7 @@ bash "install-digits" do
   ln /dev/null /dev/raw1394
   pip install -r requirements.txt
   export CAFE_HOME=/digits/digits-2.0/caffe
-  export CAFE_ROOT=/digits/digits-2.0/caffe
-  export caffe_root=/digits/digits-2.0/caffe
+  ldconfig
   mkdir /digits/data/mnist -p
   python tools/download_data/main.py mnist /digits/data/mnist
   apt-get install linux-image-extra-$(uname -r)
