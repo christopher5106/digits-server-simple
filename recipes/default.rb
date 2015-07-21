@@ -29,7 +29,7 @@ bash "install-digits" do
   pip install -r requirements.txt
   export CAFE_HOME=../caffe
   mkdir /home/ubuntu/data/mnist -p
-  python tools/download_data/main.py mnist ~/data/mnist
+  python tools/download_data/main.py mnist /home/ubuntu/data/mnist
   apt-get install linux-image-extra-$(uname -r)
   ./digits-server
   EOH
