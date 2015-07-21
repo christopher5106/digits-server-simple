@@ -26,7 +26,7 @@ bash "install-digits" do
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
   ln /dev/null /dev/raw1394
   pip install -r requirements.txt
-  export CAFE_HOME=../caffe
+  export CAFE_HOME=/home/ubuntu/digits-2.0/caffe
   mkdir /home/ubuntu/data/mnist -p
   python tools/download_data/main.py mnist /home/ubuntu/data/mnist
   apt-get install linux-image-extra-$(uname -r)
