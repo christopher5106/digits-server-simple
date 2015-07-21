@@ -1,0 +1,13 @@
+#Fast Launch of a NVIDIA DIGITS Server in AWS Opsworks
+
+This Chef recipe launch a NVIDIA DIGITS Server on Ubuntu 14.04.
+
+Create a repository in which you put a `Berksfile` with the following line:
+
+    cookbook 'digits-server-simple', git: 'git://github.com/christopher5106/digits-server-simple.git'
+
+Create a stack on AWS Opsworks with your repository.
+
+Create a custom layer and add the recipe 'digits-server-simple' to the layer's recipes in the setup step.
+
+Launch an instance, for example a `g2.2xlarge`.
