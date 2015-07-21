@@ -6,14 +6,17 @@ bash "install-digits" do
   dpkg -i cuda.deb
   apt-get update
   apt-get -y install cuda
+  rm cuda.deb
   wget -O cudnn.tgz #{node.cudnn[:url]}
   tar xvzf cudnn.tgz
+  rm cudnn.tgz
   cd cudnn-6.5-linux-x64-v2/
   cp cudnn.h /usr/local/cuda/include/
   cp libcudnn* /usr/local/cuda/lib64/
   apt-get -y install git
   wget -O digits.tgz #{node.digits[:url]}
   tar xvzf digits.tgz
+  rm digits.tgz
   cd digits-2.0/
   ./install.sh
   cd caffe
@@ -25,6 +28,9 @@ bash "install-digits" do
   ln /dev/null /dev/raw1394
   pip install -r requirements.txt
   export CAFE_HOME=../caffe
+  mkdir /home/ubuntu/data/mnist -p
+  python tools/download_data/main.py mnist ~/data/mnist
+  apt-get install linux-image-extra-$(uname -r)
   ./digits-server
   EOH
 end
