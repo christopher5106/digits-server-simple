@@ -10,9 +10,8 @@ bash "install-digits" do
   wget -O cudnn.tgz #{node.cudnn[:url]}
   tar xvzf cudnn.tgz
   rm cudnn.tgz
-  cd cudnn-6.5-linux-x64-v2/
-  cp cudnn.h /usr/local/cuda/include/
-  cp libcudnn* /usr/local/cuda/lib64/
+  cp cudnn-6.5-linux-x64-v2/cudnn.h /usr/local/cuda/include/
+  cp cudnn-6.5-linux-x64-v2/libcudnn* /usr/local/cuda/lib64/
   apt-get -y install git
   wget -O digits.tgz #{node.digits[:url]}
   tar xvzf digits.tgz
